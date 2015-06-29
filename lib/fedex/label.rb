@@ -13,10 +13,16 @@ module Fedex
         @options = package_details[:label]
         @options[:tracking_number] = package_details[:tracking_id]
       else
+        puts label_details.inspect
         @response_details = label_details[:process_shipment_reply]
         package_details = label_details[:process_shipment_reply][:completed_shipment_detail][:completed_package_details]
         @options = package_details[:label]
-        @options[:tracking_number] = package_details[:tracking_ids][:tracking_number]
+
+        @options[:tracking_number] = if package_details[:tracking_ids].is_a?(Array)
+          package_details[:tracking_ids].detect {|a| a[:tracking_id_type] == 'GROUND'}[:tracking_number]
+        else
+          package_details[:tracking_ids][:tracking_number]
+        end
       end
       @options[:format] = label_details[:format]
       @options[:file_name] = label_details[:file_name]

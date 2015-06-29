@@ -309,6 +309,15 @@ module Fedex
         }
       end
 
+      # Smart Post
+      def add_smart_post(xml)
+        xml.SmartPostDetail{
+          xml.Indicia 'PARCEL_SELECT'
+          xml.AncillaryEndorsement 'CARRIER_LEAVE_IF_NO_RESPONSE'
+          xml.HubId @credentials.mode == "production" ? '5902' : '5531'
+        }
+      end
+
       # Fedex Web Service Api
       def api_url
         @credentials.mode == "production" ? PRODUCTION_URL : TEST_URL

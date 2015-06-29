@@ -311,9 +311,11 @@ module Fedex
 
       # Smart Post
       def add_smart_post(xml)
+        weight = @packages.first[:weight][:value]
+
         xml.SmartPostDetail{
-          xml.Indicia 'PARCEL_SELECT'
-          xml.AncillaryEndorsement 'CARRIER_LEAVE_IF_NO_RESPONSE'
+          xml.Indicia weight < 1 ? 'PRESORTED_STANDARD' : 'PARCEL_SELECT'
+          xml.AncillaryEndorsement weight < 1 ? 'RETURN_SERVICE' : 'CARRIER_LEAVE_IF_NO_RESPONSE'
           xml.HubId @credentials.mode == "production" ? '5902' : '5531'
         }
       end

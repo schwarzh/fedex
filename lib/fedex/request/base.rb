@@ -50,7 +50,7 @@ module Fedex
       def initialize(credentials, options={})
         requires!(options, :shipper, :recipient, :packages)
         @credentials = credentials
-        @shipper, @recipient, @packages, @service_type, @customs_clearance_detail, @debug = options[:shipper], options[:recipient], options[:packages], options[:service_type], options[:customs_clearance_detail], options[:debug]
+        @shipper, @recipient, @packages, @service_type, @customs_clearance_detail, @smart_post, @debug = options[:shipper], options[:recipient], options[:packages], options[:service_type], options[:customs_clearance_detail], options[:smart_post], options[:debug]
         @debug = ENV['DEBUG'] == 'true'
         @shipping_options =  options[:shipping_options] ||={}
         @payment_options = options[:payment_options] ||={}
@@ -316,7 +316,7 @@ module Fedex
         xml.SmartPostDetail{
           xml.Indicia weight < 1 ? 'PRESORTED_STANDARD' : 'PARCEL_SELECT'
           xml.AncillaryEndorsement weight < 1 ? 'ADDRESS_CORRECTION' : 'FORWARDING_SERVICE' # 'CARRIER_LEAVE_IF_NO_RESPONSE'
-          xml.HubId @credentials.mode == "production" ? '5902' : '5531'
+          xml.HubId @credentials.mode == "production" ? @smart_post[:hub_id] : '5531' # 5902 (LA)
         }
       end
 

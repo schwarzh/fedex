@@ -99,6 +99,14 @@ payment_options = {
 }
 ```
 
+SmartPost can be enabled by passing in a SmartPost HubID
+
+```ruby
+smart_post = {
+  :hub_id => "5531"
+}
+```
+
 Create a `Fedex::Shipment` object using your FedEx credentials; mode should be
 either production or development depending on what Fedex environment you want to use.
 
@@ -139,6 +147,19 @@ Fedex provides multiple total values; `total_net_charge` is the final amount you
           @total_net_freight="32.1",
           @rate_zone="51">
 ```
+
+### ** Getting ALL Shipping Rates **
+
+To find all shipping rates, leave out Service Type:
+
+```ruby
+rate = fedex.rate(:shipper=>shipper,
+                  :recipient => recipient,
+                  :packages => packages,
+                  :smart_post => smart_post,
+                  :shipping_options => shipping_options)
+```
+
 ### ** Get a Transit time **
 ```ruby
 ship = fedex.ship(:shipper=>shipper,
@@ -160,6 +181,7 @@ label = fedex.label(:filename => "my_dir/example.pdf",
                     :recipient => recipient,
                     :packages => packages,
                     :service_type => "FEDEX_GROUND",
+                    :smart_post => smart_post,
                     :shipping_options => shipping_options)
 ```
 

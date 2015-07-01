@@ -113,7 +113,7 @@ module Fedex
         else
           "#{api_response["Fault"]["detail"]["fault"]["reason"]}\n--#{api_response["Fault"]["detail"]["fault"]["details"]["ValidationFailureDetail"]["message"].join("\n--")}"
         end rescue $1
-        raise RateError, error_message
+        raise RateError, response[:fault][:detail][:fault][:details][:validation_failure_detail][:message]
       end
 
       # Callback used after a successful shipment response.

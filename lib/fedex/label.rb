@@ -13,7 +13,7 @@ module Fedex
         @options = package_details[:label]
         @options[:tracking_number] = package_details[:tracking_id]
       else
-        puts label_details.inspect
+        puts label_details.inspect if @debug
         @response_details = label_details[:process_shipment_reply]
         package_details = label_details[:process_shipment_reply][:completed_shipment_detail][:completed_package_details]
         @options = package_details[:label]

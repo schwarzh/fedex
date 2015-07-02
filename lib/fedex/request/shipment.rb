@@ -23,10 +23,10 @@ module Fedex
       # The parsed Fedex response is available in #response_details
       # e.g. response_details[:completed_shipment_detail][:completed_package_details][:tracking_ids][:tracking_number]
       def process_request
-        puts build_xml if @debug
+        puts build_xml if @debug == true
 
         api_response = self.class.post api_url, :body => build_xml
-        puts api_response if @debug
+        puts api_response if @debug == true
         
         response = parse_response(api_response)
         if success?(response)

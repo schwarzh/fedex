@@ -21,7 +21,7 @@ module Fedex
       # Sends post request to Fedex web service and parse the response, a Pickup object is created if the response is successful
       def process_request
         api_response = self.class.post(api_url, :body => build_xml)
-        puts api_response if @debug
+        puts api_response if @debug == true
         response = parse_response(api_response)
         if success?(response)
           success_response(api_response, response)

@@ -44,6 +44,7 @@ module Fedex
           add_customs_clearance(xml) if @customs_clearance_detail
           # xml.RateRequestTypes "ACCOUNT"
           add_smart_post(xml) if @smart_post
+          xml.EdtRequestType 'ALL'
           add_packages(xml)
         }
       end

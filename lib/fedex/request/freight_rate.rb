@@ -37,14 +37,16 @@ module Fedex
             }
           }
           xml.Role 'SHIPPER'
-          xml.LineItems{
-            xml.FreightClass 'CLASS_050'
-            xml.Packaging 'PALLET'
-            xml.Weight{
-              xml.Units @packages.first[:weight][:units]
-              xml.Value @packages.first[:weight][:value]
+          @packages.each do |package|
+            xml.LineItems{
+              xml.FreightClass 'CLASS_050'
+              xml.Packaging 'PALLET'
+              xml.Weight{
+                xml.Units package[:weight][:units]
+                xml.Value package[:weight][:value]
+              }
             }
-          }
+          end
         }
       end
 

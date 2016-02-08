@@ -54,6 +54,8 @@ module Fedex
         @debug = ENV['DEBUG'] == 'true'
         @shipping_options =  options[:shipping_options] ||={}
         @payment_options = options[:payment_options] ||={}
+        @freight_account = options[:freight_account] ||={}
+
         requires!(@payment_options, :type, :account_number, :name, :company, :phone_number, :country_code) if @payment_options.length > 0
         if options.has_key?(:mps)
           @mps = options[:mps]

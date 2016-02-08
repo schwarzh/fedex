@@ -1,6 +1,7 @@
 require 'fedex/credentials'
 require 'fedex/request/label'
 require 'fedex/request/rate'
+require 'fedex/request/freight_rate'
 require 'fedex/request/tracking_information'
 require 'fedex/request/address'
 require 'fedex/request/document'
@@ -42,6 +43,14 @@ module Fedex
     # @param [String] service_type, A valid fedex service type, to view a complete list of services Fedex::Shipment::SERVICE_TYPES
     def rate(options = {})
       Request::Rate.new(@credentials, options).process_request
+    end
+
+    # @param [Hash] shipper, A hash containing the shipper information
+    # @param [Hash] recipient, A hash containing the recipient information
+    # @param [Array] packages, An array including a hash for each package being shipped
+    # @param [String] service_type, A valid fedex service type, to view a complete list of services Fedex::Shipment::SERVICE_TYPES
+    def freight_rate(options = {})
+      Request::FreightRate.new(@credentials, options).process_request
     end
 
     # @param [Hash] address, A hash containing the address information

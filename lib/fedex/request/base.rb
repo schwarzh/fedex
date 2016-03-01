@@ -316,8 +316,8 @@ module Fedex
         weight = @packages.first[:weight][:value]
 
         xml.SmartPostDetail{
-          xml.Indicia weight < 1 ? 'PRESORTED_STANDARD' : 'PARCEL_SELECT'
-          xml.AncillaryEndorsement weight < 1 ? 'ADDRESS_CORRECTION' : 'FORWARDING_SERVICE' # 'CARRIER_LEAVE_IF_NO_RESPONSE'
+          xml.Indicia weight <= 1 ? 'PRESORTED_STANDARD' : 'PARCEL_SELECT'
+          xml.AncillaryEndorsement weight <= 1 ? 'ADDRESS_CORRECTION' : 'FORWARDING_SERVICE' # 'CARRIER_LEAVE_IF_NO_RESPONSE'
           xml.HubId @credentials.mode == "production" ? @smart_post[:hub_id] : '5531' # 5902 (LA)
         }
       end

@@ -39,7 +39,7 @@ module Fedex
           xml.Role 'SHIPPER'
           @packages.each do |package|
             xml.LineItems{
-              xml.FreightClass 'CLASS_050'
+              xml.FreightClass package[:freight_class] || 'CLASS_050'
               xml.Packaging 'PALLET'
               xml.Weight{
                 xml.Units package[:weight][:units]

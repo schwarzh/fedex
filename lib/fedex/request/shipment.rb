@@ -49,7 +49,7 @@ module Fedex
           add_shipper(xml)
           add_recipient(xml)
           add_shipping_charges_payment(xml)
-          add_special_services(xml) if @shipping_options[:return_reason] || @shipping_options[:cod]
+          add_special_services(xml) if @shipping_options[:return_reason] || @shipping_options[:cod] || @shipping_options[:etd]
           add_customs_clearance(xml) if @customs_clearance_detail
           add_smart_post(xml) if @smart_post
           add_custom_components(xml)
@@ -101,6 +101,12 @@ module Fedex
                 xml.Amount @shipping_options[:cod][:amount] if @shipping_options[:cod][:amount]
               }
               xml.CollectionType @shipping_options[:cod][:collection_type] if @shipping_options[:cod][:collection_type]
+            }
+          end
+          if @shipping_options[:etd]
+            xml.SpecialServiceTypes "ELECTRONIC_TRADE_DOCUMENTS"
+            xml.EtdDetail {
+              xml.RequestedDocumentCopies @shipping_options[:etd]
             }
           end
         }

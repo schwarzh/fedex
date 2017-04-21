@@ -312,14 +312,14 @@ module Fedex
       # Add customs clearance(for international shipments)
       def add_customs_clearance(xml)
         xml.CustomsClearanceDetail{
+          # Add DutiesPayment node w/ Payor info
           xml.DutiesPayment{
             add_payment_and_payor(xml)
           }
-          # Mid step - Include Payor, not rest of hash
+          
+          # Attach remainder of CCD from input hash
           hash_to_xml(xml, @customs_clearance_detail)
         }
-
-        # Customs clearance needs to re-add the payor node in the xml
       end
 
       # Smart Post

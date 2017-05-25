@@ -42,6 +42,7 @@ module Fedex
           add_recipient(xml)
           add_shipping_charges_payment(xml)
           add_customs_clearance(xml) if @customs_clearance_detail
+          xml.RateRequestTypes @shipping_options[:rate_request_type] ||= "ACCOUNT"
           # xml.RateRequestTypes "ACCOUNT"
           add_smart_post(xml) if @smart_post
           xml.EdtRequestType 'ALL'

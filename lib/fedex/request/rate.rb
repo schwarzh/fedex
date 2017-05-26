@@ -14,7 +14,11 @@ module Fedex
           rate_reply_details = [rate_reply_details] if rate_reply_details.is_a?(Hash)
 
           rate_reply_details.map do |rate_reply|
-            rate_details = [rate_reply[:rated_shipment_details]].flatten.first[:shipment_rate_detail]
+            if @shipping_options[:rate_request_type] == "LIST"
+              rate_details = [rate_reply[:rated_shipment_details]].flatten.second[:shipment_rate_detail]
+            else
+              rate_details = [rate_reply[:rated_shipment_details]].flatten.first[:shipment_rate_detail]
+            end
             rate_details.merge!(service_type: rate_reply[:service_type])
             rate_details.merge!(transit_time: rate_reply[:transit_time])
             Fedex::Rate.new(rate_details)
@@ -42,8 +46,8 @@ module Fedex
           add_recipient(xml)
           add_shipping_charges_payment(xml)
           add_customs_clearance(xml) if @customs_clearance_detail
-          #xml.RateRequestTypes @shipping_options[:rate_request_type] ||= "ACCOUNT"
-          xml.RateRequestTypes "LIST"
+          xml.RateRequestTypes @shipping_options[:rate_request_type] if @shipping_options[:rate_request_type] && @shipping_options[:rate_request_type] == "LIST"
+          #xml.RateRequestTypes "LIST"
           add_smart_post(xml) if @smart_post
           xml.EdtRequestType 'ALL'
           add_packages(xml)

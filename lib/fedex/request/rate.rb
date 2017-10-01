@@ -71,7 +71,7 @@ module Fedex
             add_requested_shipment(xml)
           }
         end
-        builder.doc.root.to_xml
+        builder.doc.root.to_xml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XML)
       end
 
       def service

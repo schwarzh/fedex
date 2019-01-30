@@ -20,6 +20,7 @@ module Fedex
               rate_details = [rate_reply[:rated_shipment_details]].flatten.first[:shipment_rate_detail]
             end
             rate_details.merge!(service_type: rate_reply[:service_type])
+            rate_details.merge!(delivery_timestamp: rate_reply[:delivery_timestamp])
             rate_details.merge!(transit_time: rate_reply[:transit_time])
             Fedex::Rate.new(rate_details)
           end

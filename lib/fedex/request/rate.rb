@@ -22,6 +22,7 @@ module Fedex
             rate_details.merge!(service_type: rate_reply[:service_type])
             rate_details.merge!(delivery_timestamp: rate_reply[:delivery_timestamp])
             rate_details.merge!(transit_time: rate_reply[:transit_time])
+            rate_details.merge!(special_rating_applied: rate_reply[:special_rating_applied])
             Fedex::Rate.new(rate_details)
           end
         else
@@ -47,6 +48,7 @@ module Fedex
           add_shipper(xml)
           add_recipient(xml)
           add_shipping_charges_payment(xml)
+          add_shipment_special_service_type(xml)
           add_customs_clearance(xml) if @customs_clearance_detail
           xml.RateRequestTypes @shipping_options[:rate_request_type] if @shipping_options[:rate_request_type] && @shipping_options[:rate_request_type] == "LIST"
           #xml.RateRequestTypes "LIST"

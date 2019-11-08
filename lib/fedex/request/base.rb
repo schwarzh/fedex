@@ -188,6 +188,15 @@ module Fedex
         }
       end
 
+      #Allow for special services to be sent to FedEx
+      def add_shipment_special_service_type(xml)
+        return unless @shipping_options[:special_services_requested] && @shipping_options[:special_services_requested].fetch(:shipment_special_service_type, nil)
+
+        xml.SpecialServicesRequested do
+          xml.SpecialServiceTypes @shipping_options[:special_services_requested][:shipment_special_service_type]
+        end
+      end
+
       # Add Master Tracking Id (for MPS Shipping Labels, this is required when requesting labels 2 through n)
       def add_master_tracking_id(xml)
         if @mps.has_key? :master_tracking_id

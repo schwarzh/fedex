@@ -49,6 +49,7 @@ module Fedex
           add_shipper(xml)
           add_recipient(xml)
           add_shipping_charges_payment(xml)
+          add_shipment_special_service_type(xml)
           add_special_services(xml) if @shipping_options[:return_reason] || @shipping_options[:cod]
           add_customs_clearance(xml) if @customs_clearance_detail
           add_smart_post(xml) if @smart_post

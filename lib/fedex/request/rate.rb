@@ -19,7 +19,10 @@ module Fedex
             else
               rate_details = [rate_reply[:rated_shipment_details]].flatten.first[:shipment_rate_detail]
             end
-            rate_details.merge!(service_type: rate_reply[:service_type])
+
+            is_saturday_delivery = rate_reply[:applied_options] && rate_reply[:applied_options] == 'SATURDAY_DELIVERY'
+            service_type = is_saturday_delivery ? "#{rate_reply[:service_type]}_SATURDAY_DELIVERY" : rate_reply[:service_type]
+            rate_details.merge!(service_type: service_type)
             rate_details.merge!(delivery_timestamp: rate_reply[:delivery_timestamp])
             rate_details.merge!(transit_time: rate_reply[:transit_time])
             rate_details.merge!(special_rating_applied: rate_reply[:special_rating_applied])

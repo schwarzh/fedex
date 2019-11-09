@@ -63,6 +63,11 @@ module Fedex
         xml.ReturnTransitAndCommit true
       end
 
+      # Returns saturday delivery shipping options when available
+      def add_saturday_delivery(xml)
+        xml.VariableOptions('SATURDAY_DELIVERY') if @shipping_options[:saturday_delivery]
+      end
+
       # Build xml Fedex Web Service request
       def build_xml
         ns = "http://fedex.com/ws/rate/v#{service[:version]}"
@@ -70,8 +75,9 @@ module Fedex
           xml.RateRequest(:xmlns => ns){
             add_web_authentication_detail(xml)
             add_client_detail(xml)
-            add_version(xml)
+            add_version(xml)          
             add_transit_time(xml)
+            add_saturday_delivery(xml)  
             add_requested_shipment(xml)
           }
         end

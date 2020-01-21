@@ -1,5 +1,5 @@
 # Fedex Rate Web Service
-## Fedex API Shipment Version: 20
+## Fedex API Shipment Version: 26
 
 For more information visit [Fedex Web Services for Shipping](https://www.fedex.com/wpor/web/jsp/drclinks.jsp?links=wss/index.html).
 

@@ -50,13 +50,13 @@ module Fedex
           xml.PackagingType @shipping_options[:packaging_type] ||= "YOUR_PACKAGING"
           add_shipper(xml)
           add_recipient(xml)
-          add_shipping_charges_payment(xml)
+          #add_shipping_charges_payment(xml)
           add_shipment_special_service_type(xml)
           add_customs_clearance(xml) if @customs_clearance_detail
           xml.RateRequestTypes @shipping_options[:rate_request_type] if @shipping_options[:rate_request_type] && @shipping_options[:rate_request_type] == "LIST"
           #xml.RateRequestTypes "LIST"
           add_smart_post(xml) if @smart_post
-          xml.EdtRequestType 'ALL'
+          #xml.EdtRequestType 'ALL'
           add_packages(xml)
         }
       end

@@ -161,7 +161,7 @@ module Fedex
             xml.StateOrProvinceCode @recipient[:state]
             xml.PostalCode @recipient[:postal_code]
             xml.CountryCode @recipient[:country_code]
-            xml.Residential @recipient[:residential]
+            #xml.Residential @recipient[:residential]
           }
         }
       end
